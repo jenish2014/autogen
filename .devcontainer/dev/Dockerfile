@@ -24,7 +24,8 @@ RUN git clone https://github.com/microsoft/autogen.git /home/autogen/autogen
 WORKDIR /home/autogen/autogen
 
 # Install AutoGen in editable mode with extra components
-RUN sudo pip install -e .[test,teachable,lmm,retrievechat,mathchat,blendsearch]
+# packages limited to testing autogen
+RUN sudo pip install -e .[test]
 
 # Install pre-commit hooks
 RUN pre-commit install
@@ -46,9 +47,8 @@ ENV PATH="${PATH}:/home/autogen/quarto/quarto-1.5.23/bin/"
 # Exposes the Yarn port for Docusaurus
 EXPOSE 3000
 
-# Pre-load popular Python packages
+# upgrade pip
 RUN pip install --upgrade pip
-RUN pip install numpy pandas matplotlib seaborn scikit-learn requests urllib3 nltk pillow pytest beautifulsoup4
 
 # Set the default command to bash
 CMD ["/bin/bash"]
